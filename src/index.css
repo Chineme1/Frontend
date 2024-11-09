@@ -5,7 +5,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -15,7 +14,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('./Components/Assets/background.jpg') no-repeat;
+  background: url(./Components/Assets/bookcycle\ background2.jpg)
+  no-repeat;
   background-size: cover;
   background-position: center;
 }
