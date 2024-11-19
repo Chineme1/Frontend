@@ -1,10 +1,10 @@
 import React from 'react';
-import './loginform.css';
+import './LoginForm.css';
 import { FaUser, FaLock } from "react-icons/fa";
 
-const loginform = () => {
+const LoginForm = () => {
     return (
-        <div className='wrapper'> 
+        <div className='wrapper'>
             <form action="">
                 <h1>Login</h1>
                 <div className="input-box">
@@ -25,10 +25,10 @@ const loginform = () => {
                 <div className="register-link">
                     <p>Don't have an account? <a href="#">Register</a></p>
                 </div>
-                </form>
-                </div>
+            </form>
+        </div>
 
     );
 };
- 
-export default loginform;
+
+export default LoginForm;
