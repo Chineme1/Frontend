@@ -11,7 +11,6 @@ import LoginForm from './Components/LoginForm/LoginForm';
 
 function App() {
   return (
-    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -20,7 +19,6 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </div>
   );
 }
 
