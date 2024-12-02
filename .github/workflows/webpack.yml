@@ -24,6 +24,7 @@ jobs:
 
     - name: Build
       run: |
+          npm fund &&
           npm install &&
           npm run build &&
           npm run start
