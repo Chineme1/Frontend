@@ -1,6 +1,6 @@
 import React from 'react';
 import { products } from '../products';
-import ProductCart from '../components/productCart';
+import ProductCart from '../Components/ProductCart';
 
 const Home = () => {
   return (

@@ -6,12 +6,12 @@ import { addToCart } from '../stores/cart';
 
 const Detail = () => {
   const { slug } = useParams();
-  const [detail, setDetail] = useState([]);
+  const [detail, setDetail] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
     const findDetail = products.filter((product) => product.slug === slug);
-    if (findDetail.length > 0) {
+    if (findDetail?.length > 0) {
       setDetail(findDetail[0]);
     } else {
       window.location.href = '/';
@@ -26,7 +26,7 @@ const Detail = () => {
   const handleAddToCart = () => {
     dispatch(
       addToCart({
-        productId: detail.id,
+        productId: detail?.id,
         quantity: quantity,
       })
     );
@@ -36,11 +36,11 @@ const Detail = () => {
       <h2 className="text-3xl text-center">PRODUCT DETAIL</h2>
       <div className="grid grid-cols-2 gap-5 mt-5">
         <div>
-          <img src={detail.image} alt="" className="w-full" />
+          <img src={detail?.image} alt="" className="w-full" />
         </div>
         <div className="flex flex-col gap-5">
-          <h1 className="text-4xl uppercase font-bold">{detail.name}</h1>
-          <p className="font-bold text-3xl">${detail.price}</p>
+          <h1 className="text-4xl uppercase font-bold">{detail?.name}</h1>
+          <p className="font-bold text-3xl">${detail?.price}</p>
           <div className="flex gap-5">
             <div className="flex gap-2 justify-center items-center">
               <button
@@ -66,7 +66,7 @@ const Detail = () => {
               Add to Cart
             </button>
           </div>
-          <p>{detail.description}</p>
+          <p>{detail?.description}</p>
         </div>
       </div>
     </div>
