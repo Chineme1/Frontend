@@ -4,11 +4,14 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('./database.json')
+const adapter = new FileSync('./db.json')
 const db = low(adapter)
 
 // Initialize Express app
 const app = express()
+db.read();
+db.data ||= { users: [] };
+db.write();
 
 // Define a JWT secret key. This should be isolated by using env variables for security
 const jwtSecretKey = 'dsfdsfsdfdsvcsvdfgefg'
@@ -24,16 +27,14 @@ app.get('/', (_req, res) => {
 
 app.post('/auth', (req, res) => {
     const { email, password } = req.body
+    console.log(email, password);
 
     // Look up the user entry in the database
-    const user = db
-        .get('users')
-        .value()
-        .filter((user) => email === user.email)
+    const user = db.get('users').find({ email }).value();
 
     // If found, compare the hashed passwords and generate the JWT token for the user
-    if (user.length === 1) {
-        bcrypt.compare(password, user[0].password, function (_err, result) {
+    if (user) {
+        bcrypt.compare(password, user.password, function (_err, result) {
             if (!result) {
                 return res.status(401).json({ message: 'Invalid password' })
             } else {
@@ -47,7 +48,7 @@ app.post('/auth', (req, res) => {
             }
         })
         // If no user is found, hash the given password and create a new entry in the auth db with the email and hashed password
-    } else if (user.length === 0) {
+    } else if (user === undefined || user.length === 0) {
         bcrypt.hash(password, 10, function (_err, hash) {
             console.log({ email, password: hash })
             db.get('users').push({ email, password: hash }).write()
