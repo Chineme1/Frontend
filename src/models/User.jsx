@@ -39,6 +39,28 @@ export class User {
   }
 
   login(email, password) {
+    const logIn = () => {
+      console.log('calling')
+      fetch('http://localhost:3080/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      })
+        .then((r) => r.json())
+        .then((r) => {
+          if ('success' === r.message) {
+            localStorage.setItem('user', JSON.stringify({ email, token: r.token }))
+            this.isLoggedIn = (true)
+            this.email = (email)
+            // navigate('/')
+          } else {
+            window.alert('Wrong email or password')
+          }
+        })
+    }
+    logIn();
     if (this.email === email && bcrypt.compareSync(password, this.password)) {
       this.isLoggedIn = true;
       console.log(`User ${this.email} logged in.`);

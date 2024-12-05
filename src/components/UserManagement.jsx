@@ -56,6 +56,18 @@ const UserManagement = () => {
     setUser(newUser);
   };
   const handleLogin = () => {
+    let user = new User(
+      "test",
+      "Dummy",
+      "Testing",
+      "test@test.com",
+      "12-12-12",
+      "12345 Test Street, TestField, MI - 11111",
+      "myusername",
+      "mypassword",
+      false
+    );
+    user.login(email, password);
     if (user && user.login(email, password)) {
       setLoggedIn(true);
       alert("Login successful");
