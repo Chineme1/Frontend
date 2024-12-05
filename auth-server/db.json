@@ -3,6 +3,10 @@
     {
       "email": "email",
       "password": "$2b$10$/ckjQOI3XkRit/oCAIVxtucFlxQ1mwrx9vol3MtlC6kQQCArzne9q"
+    },
+    {
+      "email": "test@james.com",
+      "password": "$2b$10$vnXZN93v1WtfVmuJxQPDVeyHJjYLAQ/Pfbhii/FZMYboQlaVeIaU6"
     }
   ]
 }

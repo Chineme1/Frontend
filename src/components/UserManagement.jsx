@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { User } from "../models/User";
+import { useNavigate } from 'react-router-dom';
 import Button from "@mui/material/Button";
 import {
   Box,
@@ -25,6 +26,7 @@ const UserManagement = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
   const handleClickShowPassword = () =>
     setShowPassword((showPassword) => !showPassword);
 
@@ -55,7 +57,8 @@ const UserManagement = () => {
     newUser.createAccount();
     setUser(newUser);
   };
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    console.log('kasdm', email, password);
     let user = new User(
       "test",
       "Dummy",
@@ -67,12 +70,10 @@ const UserManagement = () => {
       "mypassword",
       false
     );
-    user.login(email, password);
-    if (user && user.login(email, password)) {
-      setLoggedIn(true);
-      alert("Login successful");
-    } else {
-      alert("Login failed");
+    const loggedIn = await user.login(email, password);
+    console.log(loggedIn);
+    if (loggedIn) {
+      navigate('/');
     }
   };
   const handleLogout = () => {
@@ -119,7 +120,7 @@ const UserManagement = () => {
               backgroundColor: "yellow",
             }}
           >
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined" onChange={(event) => setEmail(event.target.value)}>
               <InputLabel htmlFor="outlined-adornment-password">
                 Username/Email
               </InputLabel>
@@ -136,7 +137,7 @@ const UserManagement = () => {
                 }}
               />
             </FormControl>
-            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined" onChange={(event) => setPassword(event.target.value)}>
               <InputLabel htmlFor="outlined-adornment-password">
                 Password
               </InputLabel>
