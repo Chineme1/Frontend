@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom'; // Import useLocation to access passed state
+import { products } from '../products'; // Import products array
 
 const Checkout = () => {
   const location = useLocation(); // Access location object
   const { cartItems } = location.state || {}; // Destructure cartItems from state
+
+  const [cartDetails, setCartDetails] = useState([]);
+
+  useEffect(() => {
+    if (cartItems) {
+      // Fetch product details for each item in the cart
+      const updatedCartDetails = cartItems.map((item) => {
+        const product = products.find((product) => product.id === item.productId);
+        return { ...item, product }; // Merge product details with cart item
+      });
+      setCartDetails(updatedCartDetails);
+    }
+  }, [cartItems]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -20,7 +34,7 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., send form data to server or integrate payment gateway)
+    // Handle form submission logic here
     console.log('Form submitted with:', formData);
   };
 
@@ -28,13 +42,19 @@ const Checkout = () => {
     <div className="p-5">
       <h2 className="text-2xl">Checkout</h2>
 
-      {/* Display cart items */}
+      {/* Display Cart Items */}
       <div className="my-5">
         <h3 className="text-xl">Your Cart</h3>
         <ul>
-          {cartItems && cartItems.map((item, key) => (
-            <li key={key}>
-              {item.name} - ${item.price} x {item.quantity}
+          {cartDetails && cartDetails.map((item, index) => (
+            <li key={index} className="flex justify-between items-center mb-4">
+              <img src={item.product.image} alt={item.product.name} className="w-16" />
+              <div>
+                <p>{item.product.name}</p>
+                <p>Price: ${item.product.price}</p>
+                <p>Quantity: {item.quantity}</p>
+                <p>Total: ${item.product.price * item.quantity}</p>
+              </div>
             </li>
           ))}
         </ul>
