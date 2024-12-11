@@ -38,7 +38,9 @@ const CartTab = () => {
         <button className="bg-black text-white" onClick={handleCloseTabCart}>
           CLOSE
         </button>
-        <button className="bg-amber-600 text-white">CHECKOUT</button>
+       <Link to="/checkout">
+          <button className="bg-amber-600 text-white">CHECKOUT</button>
+        </Link>
       </div>
     </div>
   );
