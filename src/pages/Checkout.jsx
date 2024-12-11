@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom'; // Import useLocation to access passed state
 
-const Checkout = ({ cartItems }) => {
+const Checkout = () => {
+  const location = useLocation(); // Access location object
+  const { cartItems } = location.state || {}; // Destructure cartItems from state
+
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -16,7 +20,7 @@ const Checkout = ({ cartItems }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle payment submission logic here (e.g., send form data to server or integrate payment gateway)
+    // Handle form submission logic here (e.g., send form data to server or integrate payment gateway)
     console.log('Form submitted with:', formData);
   };
 
@@ -24,10 +28,11 @@ const Checkout = ({ cartItems }) => {
     <div className="p-5">
       <h2 className="text-2xl">Checkout</h2>
 
+      {/* Display cart items */}
       <div className="my-5">
         <h3 className="text-xl">Your Cart</h3>
         <ul>
-          {cartItems.map((item, key) => (
+          {cartItems && cartItems.map((item, key) => (
             <li key={key}>
               {item.name} - ${item.price} x {item.quantity}
             </li>
@@ -35,6 +40,7 @@ const Checkout = ({ cartItems }) => {
         </ul>
       </div>
 
+      {/* Payment Form */}
       <form onSubmit={handleSubmit}>
         <div className="my-3">
           <label htmlFor="name" className="block">Name</label>
