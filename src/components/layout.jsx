@@ -1,11 +1,15 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom'; // Import useLocation
 import Header from './header';
 import CartTab from './cartTab';
 import { useSelector } from 'react-redux';
 
 const Layout = () => {
+  const location = useLocation(); // Get the current route
   const statusTabCart = useSelector((store) => store.cart.statusTab);
+
+  const showCartTab = location.pathname !== '/checkout'; // Hide CartTab on the Checkout page
+
   return (
     <div className="bg-zinc-200">
       <main
@@ -15,7 +19,7 @@ const Layout = () => {
         <Header />
         <Outlet />
       </main>
-      <CartTab />
+      {showCartTab && <CartTab />} {/* Conditionally render CartTab */}
     </div>
   );
 };
