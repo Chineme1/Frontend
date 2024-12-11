@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { products } from '../products';
 
 const Checkout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { cartItems } = location.state || {};
 
   const [cartDetails, setCartDetails] = useState([]);
