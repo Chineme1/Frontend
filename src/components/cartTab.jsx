@@ -7,6 +7,9 @@ const CartTab = () => {
   const carts = useSelector((store) => store.cart.items);
   const statusTab = useSelector((store) => store.cart.statusTab);
   const dispatch = useDispatch();
+  // Calculate subtotal
+  const subtotal = carts.reduce((total, item) => total + item.price * item.quantity, 0);
+  
   const handleCloseTabCart = () => {
     dispatch(toggleStatusTab());
   };
@@ -22,6 +25,15 @@ const CartTab = () => {
           <CartItem key={key} data={item} />
         ))}
       </div>
+      
+      {/* Subtotal Section */}
+      <div className="p-5 text-white">
+        <div className="flex justify-between">
+          <span>Subtotal</span>
+          <span>${subtotal.toFixed(2)}</span> {/* Display subtotal with 2 decimal places */}
+        </div>
+      </div>
+      
       <div className="grid grid-cols-2">
         <button className="bg-black text-white" onClick={handleCloseTabCart}>
           CLOSE
